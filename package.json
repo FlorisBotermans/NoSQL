@@ -1,0 +1,27 @@
+{
+  "name": "nosql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FlorisBotermans/NoSQL.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FlorisBotermans/NoSQL/issues"
+  },
+  "homepage": "https://github.com/FlorisBotermans/NoSQL#readme",
+  "dependencies": {
+    "mocha": "^5.2.0",
+    "mongoose": "^5.3.13",
+    "nodemon": "^1.18.6"
+  }
+}
