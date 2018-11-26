@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-before(done => {
+before((done) => {
     mongoose.connect('mongodb://localhost/studdit_test', { useNewUrlParser: true });
     mongoose.connection
         .once('open', () => done())
@@ -9,7 +9,7 @@ before(done => {
         });
 });
 
-beforeEach(done => {
+beforeEach((done) => {
     const { users, threads, comments } = mongoose.connection.collections;
     users.drop(() => {
         threads.drop(() => {

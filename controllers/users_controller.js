@@ -12,7 +12,7 @@ module.exports = {
     // only edit password
     editUser(req, res, next) {
         const userBody = req.body;
-        const userId = req.params.id;
+        const userId = req.params.userid;
 
         User.findByIdAndUpdate({ _id: userId }, userBody)
             .then(() => User.findById({ _id: userId }))
@@ -21,7 +21,7 @@ module.exports = {
     },
 
     deleteUser(req, res, next) {
-        const userId = req.params.id;
+        const userId = req.params.userid;
 
         User.findByIdAndRemove({ _id: userId })
             .then(user => res.status(204).send(user))
@@ -38,4 +38,4 @@ module.exports = {
     deleteFriendship(req, res, next) {
 
     }
-}
+};
