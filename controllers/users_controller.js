@@ -27,5 +27,16 @@ module.exports = {
         User.findByIdAndRemove({_id:userId})
         .then(user => res.status(204).send(user))
         .catch(next);
+    },
+
+    createFriendship(req, res, next){
+        const userFriendshipBody = req.body;
+        const userId = req.params.id;
+        
+        User.findById({_id: userId} )
+        .then((user)=> user.)
+
+
+
     }
 }
