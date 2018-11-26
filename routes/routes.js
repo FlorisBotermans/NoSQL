@@ -4,24 +4,29 @@ const CommentsController = require('../controllers/comments_controller');
 
 module.exports = (app) => {
     // user CRUD
-    app.post('/api/users', UsersController.createNewUser);
-    app.get('/api/users', UsersController.getAllUsers);
+    app.post('/api/users', UsersController.createUser);
     app.put('/api/users/:userid', UsersController.editUser);
-    app.get('/api/users/:userid', UsersController.getUserById);
     app.delete('/api/users/:userid', UsersController.deleteUser);
+    // friendship CRUD
+    app.post('/api/users/:userid/friendships', UsersController.createFriendship);
+    app.delete('/api/users/:userid/friendships/:friendshipid', UsersController.deleteFriendship)
 
     // thread CRUD
     app.post('/api/users/:userid/threads', ThreadsController.createNewThread);
     app.get('/api/users/:userid/threads', ThreadsController.getAllThreads);
-    app.put('/api/users/userid/:userid/threads/:threadid', ThreadsController.editThread);
-    app.get('/api/users/userid/:userid/threads/:threadid', ThreadsController.getThreadById);
-    app.delete('/api/users/userid/:userid/threads/:threadid', ThreadsController.deleteThread);
+    app.put('/api/users/:userid/threads/:threadid', ThreadsController.editThread);
+    app.get('/api/users/:userid/threads/:threadid', ThreadsController.getThreadById);
+    app.delete('/api/users/:userid/threads/:threadid', ThreadsController.deleteThread);
+    // Upvote & downvote thread CRUD
+    app.put('/api/users/:userid/threads/:threadid/upvote', ThreadsController.upvoteThread);
+    app.put('/api/users/:userid/threads/:threadid/downvote', ThreadsController.downvoteThread);
 
     // comment CRUD
-    app.post('/api/users/userid/:userid/threads/:threadid/comments', CommentsController.createNewComment);
-    app.get('/api/users/userid/:userid/threads/:threadid/comments', CommentsController.getAllComments);
-    app.put('/api/users/userid/:userid/threads/:threadid/comments/:commentid', CommentsController.editComment);
-    app.get('/api/users/userid/:userid/threads/:threadid/comments/:commentid', CommentsController.getCommentById);
-    app.delete('/api/users/userid/:userid/threads/:threadid/comments/:commentid', CommentsController.deleteComment);
-
+    app.post('/api/users/:userid/threads/:threadid/comments', CommentsController.createNewComment);
+    app.post('/api/users/:userid/threads/:threadid/comments/:commentid', CommentsController.createNewCommentExistingComment);
+    app.put('/api/users/:userid/threads/:threadid/comments/:commentid', CommentsController.editComment);
+    app.delete('/api/users/:userid/threads/:threadid/comments/:commentid', CommentsController.deleteComment);
+    // Upvote & downvote thread CRUD
+    app.put('/api/users/:userid/threads/:threadid/comments/:commentid/upvote', CommentsController.upvoteComment);
+    app.put('/api/users/:userid/threads/:threadid/comments/:commentid/downvote', CommentsController.downvoteComment);
 }
