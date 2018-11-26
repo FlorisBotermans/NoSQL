@@ -13,10 +13,12 @@ module.exports = {
         const userBody = req.body;
         const userId = req.params.id;
 
-        User.edit({_id:userId}, userBody)
+        User.findByIdAndUpdate({_id:userId}, userBody)
         .then(()=>User.findById({_id:userId}))
         .then(user => res.send(user))
         .catch(next);
+
+        // only edit password
     },
 
     deleteUser(req, res, next){
@@ -25,6 +27,5 @@ module.exports = {
         User.findByIdAndRemove({_id:userId})
         .then(user => res.status(204).send(user))
         .catch(next);
-
     }
 }
