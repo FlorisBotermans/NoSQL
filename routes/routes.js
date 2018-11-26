@@ -29,4 +29,4 @@ module.exports = (app) => {
     // Upvote & downvote thread CRUD
     app.put('/api/users/:userid/threads/:threadid/comments/:commentid/upvote', CommentsController.upvoteComment);
     app.put('/api/users/:userid/threads/:threadid/comments/:commentid/downvote', CommentsController.downvoteComment);
-}
+};
