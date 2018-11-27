@@ -6,6 +6,7 @@ const app = require('../../app');
 const Comment = mongoose.model('comment');
 
 describe('Comments controller', ()=> {
+    // WORKS 
     it('POST to api/comments creates a new comment', (done)=>{
         Comment.countDocuments().then(count =>{
             request(app)
@@ -21,7 +22,7 @@ describe('Comments controller', ()=> {
     });
 
     it('POST to api/comments creates a comment on an existing comment', (done)=>{
-        const comment = new comment({content: 'content'});
+        const comment = new Comment({content: 'content'});
 
         Comment.countDocuments().then(count =>{
             request(app)
@@ -37,7 +38,7 @@ describe('Comments controller', ()=> {
     });
 
     it('PUT to api/comments that edits a comment', (done)=>{
-        const comment = new comment({content: 'content'});
+        const comment = new Comment({content: 'content'});
 
         comment.save().then(() =>{
             request(app)
@@ -53,12 +54,13 @@ describe('Comments controller', ()=> {
         });
     });
 
-    it('DELETE to api/comments that deletes a comment', (done)=>{
-        const comment = new comment({content: 'content'});
+    // WORKS
+    it.only('DELETE to api/comments that deletes a comment', (done)=>{
+        const comment = new Comment({content: 'content'});
 
         comment.save().then(() =>{
             request(app)
-            .delete('/api/users/:userid/threads/:threadid/comments/'+comment._id)
+            .delete('/api/comments/'+comment._id)
             .end(()=> {
                 Comment.findOne({content: 'content'})
                 .then((comment)=>{

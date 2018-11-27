@@ -6,7 +6,8 @@ const app = require('../../app');
 const User = mongoose.model('user');
 
 describe('User controller', ()=> {
-    it('POST to api/user creates a new user', (done)=>{
+    // WORKS
+    it('POST to api/user creates a new user', (done) => {
         User.countDocuments().then(count =>{
             request(app)
             .post('/api/users')
@@ -20,7 +21,7 @@ describe('User controller', ()=> {
         });
     });
 
-    it('PUT to api/user that edits a user password', (done)=>{
+    it('PUT to api/user that edits a user password', (done) => {
         const user =  new User({userName: 'testUser', password: 'testing'})
 
         user.save().then(() =>{
@@ -37,6 +38,7 @@ describe('User controller', ()=> {
         });
     });
 
+    // WORKS
     it('DELETE to api/user that deletes a user', (done)=>{
         const user =  new User({userName: 'testUser', password: 'testing'})
 

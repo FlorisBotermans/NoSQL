@@ -6,6 +6,7 @@ const app = require('../../app');
 const Thread = mongoose.model('thread');
 
 describe('Thread controller', ()=> {
+    // WORKS
     it('POST to api/threads creates a new thread', (done)=>{
         Thread.countDocuments().then(count =>{
             request(app)
@@ -20,7 +21,7 @@ describe('Thread controller', ()=> {
         });
     });
 
-    //GET TESTS
+    // WORKS
     it('GET to api/threads retrieves all threads', (done)=>{
         const thread =  new Thread({title: 'title', content: 'content'});
 
@@ -34,6 +35,7 @@ describe('Thread controller', ()=> {
         });
     });
 
+    // WORKS
     it('GET to api/threads retrieves a specific thrad', (done)=>{
         const thread =  new Thread({title: 'title', content: 'content'});
 
@@ -65,12 +67,13 @@ describe('Thread controller', ()=> {
         });
     });
 
+    // WORKS
     it('DELETE to api/user that deletes a user', (done)=>{
         const thread =  new Thread({title: 'title', content: 'content'});
 
         thread.save().then(() =>{
             request(app)
-            .delete('/api/users/:userid/threads/'+thread._id)
+            .delete('/api/threads/'+thread._id)
             .end(()=> {
                 Thread.findOne({title: 'title'})
                 .then((thread)=>{

@@ -10,7 +10,12 @@ module.exports = {
     },
 
     editUser(req, res, next) {
-        // MUST BE CREATED WITH MONGOOSE
+        User.update(
+            { $set: { password: req.body.password } }
+        )
+        .then(() User.findById)
+        .then(user => res.send(user))
+        .catch(next);
     },
 
     deleteUser(req, res, next) {
