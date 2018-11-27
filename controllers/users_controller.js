@@ -10,12 +10,17 @@ module.exports = {
     },
 
     editUser(req, res, next) {
-        User.update(
-            { $set: { password: req.body.password } }
-        )
-        .then(() User.findById)
-        .then(user => res.send(user))
-        .catch(next);
+        if(req.body.password != null){
+            User.findByIdAndUpdate(
+                { _id: req.params.userid },
+                { $set: { password: req.body.password } }
+            )
+            .then(() => User.findById({ _id: req.params.userid }))
+            .then(user => res.send(user))
+            .catch(next);
+        } else {
+            res.status(422).send({ error: 'Cannot modify username' });
+        }
     },
 
     deleteUser(req, res, next) {

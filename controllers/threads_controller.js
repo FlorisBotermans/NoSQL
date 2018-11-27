@@ -29,7 +29,17 @@ module.exports = {
     },
 
     editThread(req, res, next) {
-        // MUST BE CREATED WITH MONGOOSE
+        if(req.body.content != null){
+            Thread.findByIdAndUpdate(
+                { _id: req.params.threadid },
+                { $set: { content: req.body.content } }
+            )
+            .then(() => Thread.findById({ _id: req.params.threadid }))
+            .then(thread => res.send(thread))
+            .catch(next);
+        } else {
+            res.status(422).send({ error: 'Cannot modify title' });
+        }
     },
 
     deleteThread(req, res, next) {

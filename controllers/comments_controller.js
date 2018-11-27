@@ -26,10 +26,6 @@ module.exports = {
         // MUST BE CREATED WITH NEO4J
     },
 
-    editComment(req, res, next) {
-        // MUST BE CREATED WITH MONGOOSE
-    },
-
     deleteComment(req, res, next) {
         Thread.update(
             { $pull: { comments: req.params.commentid } } 
