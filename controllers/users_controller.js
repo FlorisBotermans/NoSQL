@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Comment = require('../models/comment');
 
 module.exports = {
     // USER CRUD
@@ -13,9 +14,12 @@ module.exports = {
     },
 
     deleteUser(req, res, next) {
-        User.findByIdAndRemove({ _id: req.params.userid })
-            .then(user => res.status(204).send(user))
-            .catch(next);
+        Comment.update(
+            { $unset: { user: "" } } 
+        )
+        .then(() => User.findByIdAndDelete({ _id: req.params.userid }))
+        .then(user => res.status(204).send(user))
+        .catch(next);
     },
 
     // FRIENDSHIP CRUD

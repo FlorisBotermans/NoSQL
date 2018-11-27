@@ -31,7 +31,12 @@ module.exports = {
     },
 
     deleteComment(req, res, next) {
-        // MUST BE CREATED WITH MONGOOSE
+        Thread.update(
+            { $pull: { comments: req.params.commentid } } 
+        )
+        .then(() => Comment.findByIdAndDelete({ _id: req.params.commentid }))
+        .then(comment => res.status(204).send(comment))
+        .catch(next);
     },
 
     // UPVOTE & DOWNVOTE COMMENT CRUD

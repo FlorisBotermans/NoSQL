@@ -33,7 +33,12 @@ module.exports = {
     },
 
     deleteThread(req, res, next) {
-        // MUST BE CREATED WITH MONGOOSE
+        User.update(
+            { $pull: { threads: req.params.threadid } } 
+        )
+        .then(() => Thread.findByIdAndDelete({ _id: req.params.threadid }))
+        .then(thread => res.status(204).send(thread))
+        .catch(next);
     },
 
     // UPVOTE & DOWNVOTE THREAD CRUD
