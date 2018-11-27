@@ -1,41 +1,29 @@
 const User = require('../models/user');
 
 module.exports = {
+    // USER CRUD
     createUser(req, res, next) {
-        const user = req.body;
-
-        User.create(user)
+        User.create(new User(req.body))
             .then(user => res.send(user))
             .catch(next);
     },
 
-    // only edit password
     editUser(req, res, next) {
-        const userBody = req.body;
-        const userId = req.params.userid;
-
-        User.findByIdAndUpdate({ _id: userId }, userBody)
-            .then(() => User.findById({ _id: userId }))
-            .then(user => res.send(user))
-            .catch(next);
+        // MUST BE CREATED WITH MONGOOSE
     },
 
     deleteUser(req, res, next) {
-        const userId = req.params.userid;
-
-        User.findByIdAndRemove({ _id: userId })
+        User.findByIdAndRemove({ _id: req.params.userid })
             .then(user => res.status(204).send(user))
             .catch(next);
     },
 
-    // Must be created in Neo4J
+    // FRIENDSHIP CRUD
     createFriendship(req, res, next) {
-        const userFriendshipBody = req.body;
-        const userId = req.params.id;
+        // MUST BE CREATED WITH NEO4J
     },
 
-    // Must be created in Neo4J
     deleteFriendship(req, res, next) {
-
+        // MUST BE CREATED WITH NEO4J
     }
 };
