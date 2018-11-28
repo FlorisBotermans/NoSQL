@@ -6,7 +6,6 @@ module.exports = {
     // USER CRUD
     // OK
     createUser(req, res, next) {
-      
         let session = driver.session();
         let createNeo4j = session.run(
             'CREATE (a: user{userName: $userName, password: $password}) RETURN a',
@@ -16,9 +15,8 @@ module.exports = {
             }
         )
         .then((result) => {
-            console.log(result);
             session.close();
-            return  User.create(new User(req.body))
+            return User.create(new User(req.body))
         })
         .then((user) => {
             res.send(user);
