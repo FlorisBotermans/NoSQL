@@ -27,7 +27,8 @@ module.exports = {
     },
 
     deleteComment(req, res, next) {
-        Thread.update(
+        Thread.findByIdAndUpdate(
+            { _id: req.params.threadid },
             { $pull: { comments: req.params.commentid } } 
         )
         .then(() => Comment.findByIdAndDelete({ _id: req.params.commentid }))

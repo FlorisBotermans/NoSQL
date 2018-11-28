@@ -23,10 +23,10 @@ module.exports = {
         }
     },
 
+    // NEED TO BE FIXED
     deleteUser(req, res, next) {
-        Comment.update(
-            { $unset: { user: "" } } 
-        )
+        Comment.updateMany({ $unset: { user: "" } })
+        .where('user._id').equals(req.params.userid)
         .then(() => User.findByIdAndDelete({ _id: req.params.userid }))
         .then(user => res.status(204).send(user))
         .catch(next);

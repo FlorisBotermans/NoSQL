@@ -43,7 +43,8 @@ module.exports = {
     },
 
     deleteThread(req, res, next) {
-        User.update(
+        User.findByIdAndUpdate(
+            { _id: req.params.userid },
             { $pull: { threads: req.params.threadid } } 
         )
         .then(() => Thread.findByIdAndDelete({ _id: req.params.threadid }))

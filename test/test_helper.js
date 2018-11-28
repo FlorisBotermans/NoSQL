@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
-before((done) => {
+before(done => {
     mongoose.connect('mongodb://localhost/studdit_test', { useNewUrlParser: true });
+    console.log('Connected to studdit_test database');
     mongoose.connection
         .once('open', () => done())
         .on('error', err => {
@@ -9,7 +10,7 @@ before((done) => {
         });
 });
 
-beforeEach((done) => {
+beforeEach(done => {
     const { users, threads, comments } = mongoose.connection.collections;
     users.drop(() => {
         threads.drop(() => {

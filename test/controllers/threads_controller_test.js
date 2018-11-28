@@ -3,87 +3,87 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../../app');
 
+const User = mongoose.model('user');
 const Thread = mongoose.model('thread');
 
-describe('Thread controller', ()=> {
-    // WORKS
-    it('POST to api/threads creates a new thread', (done)=>{
-        Thread.countDocuments().then(count =>{
+describe('Thread controller', () => {
+    it('POST to api/threads creates a new thread', done => {
+        Thread.countDocuments().then(count => {
             request(app)
-            .post('/api/users/:userid/threads')
-            .send({title: 'title', content: 'content'})
-            .end(()=> {
-                Thread.countDocuments().then(newCount => {
-                    assert(count + 1 === newCount);
-                    done();
+                .post('/api/users/:userid/threads')
+                .send({ title: 'testTitle', content: 'testContent' })
+                .end(() => {
+                    Thread.countDocuments().then(newCount => {
+                        assert(count + 1 === newCount);
+                        done();
+                    });
                 });
-            });
         });
     });
 
-    // WORKS
-    it('GET to api/threads retrieves all threads', (done)=>{
-        const thread =  new Thread({title: 'title', content: 'content'});
+    it('GET to api/threads retrieves all threads', done => {
+        const thread = new Thread({ title: 'testTitle', content: 'testContent' });
+        const thread2 = new Thread({ title: 'testTitle2', content: 'testContent2' });
 
-        thread.save().then(() =>{
-            request(app)
-            .get('/api/users/:userid/threads')
-            .send({})
-            .end(()=> {
-                done();
+        Promise.all([thread.save(), thread2.save()])
+            .then(() => {
+                request(app)
+                    .get('/api/threads')
+                    .end((err, response) => {
+                        assert(response.body.length === 2);
+                        assert(response.body[1].title === 'testTitle2');
+                        done();
+                    });
             });
-        });
     });
 
-    // WORKS
-    it('GET to api/threads retrieves a specific thrad', (done)=>{
-        const thread =  new Thread({title: 'title', content: 'content'});
+    it('GET to api/threads/threadid retrieves a specific thread', done => {
+        const thread = new Thread({ title: 'testTitle', content: 'testContent' });
 
-        thread.save().then(() =>{
-            request(app)
-            .get('/api/users/:userid/threads/'+ thread._id)
-            .send({})
-            .end(()=> {
-                done();
-                
+        thread.save()
+            .then(() => {
+                request(app)
+                    .get('/api/threads/' + thread._id)
+                    .end((err, response) => {
+                        assert(response.body.title === 'testTitle');
+                        done();
+                    });
             });
-        });
     });
 
-    it('PUT to api/threads that edits a thread content', (done)=>{
-        const thread =  new Thread({title: 'title', content: 'content'});
+    it('PUT to api/threads/threadid edits the content of a thread', done => {
+        const thread = new Thread({ title: 'testTitle', content: 'testContent' });
 
-        thread.save().then(() =>{
+        thread.save().then(() => {
             request(app)
-            .put('/api/users/:userid/threads/'+thread._id)
-            .send({content: 'changedContent'})
-            .end(()=> {
-                Thread.findOne({title: 'testUser'})
-                .then(thread=>{
-                    assert(thread.title === 'title');
-                    done();
+                .put('/api/threads/' + thread._id)
+                .send({ content: 'changedContent' })
+                .end(() => {
+                    Thread.findOne({ title: 'testTitle' })
+                        .then(thread => {
+                            assert(thread.content === 'changedContent');
+                            done();
+                        });
                 });
-            });
         });
     });
 
-    // WORKS
-    it('DELETE to api/user that deletes a user', (done)=>{
-        const thread =  new Thread({title: 'title', content: 'content'});
+    it('DELETE to api/threads/threadid deletes a thread', done => {
+        const user = new User({ userName: 'testUserName', password: 'testPassword' });
+        const thread = new Thread({ title: 'testTitle', content: 'testContent' });
 
-        thread.save().then(() =>{
+        Promise.all([user.save(), thread.save()]).then(() => {
             request(app)
-            .delete('/api/threads/'+thread._id)
-            .end(()=> {
-                Thread.findOne({title: 'title'})
-                .then((thread)=>{
-                    assert(thread === null);
-                    done();
+                .delete('/api/users/' + user._id + '/threads/' + thread._id)
+                .end(() => {
+                    Thread.findOne({ title: 'testTitle' })
+                        .then(thread => {
+                            assert(thread === null);
+                            done();
+                        });
                 });
-            });
         });
     });
-
     //UPVOTE AND DOWNVOTE MUST BE CREATED
-    
+
 });
