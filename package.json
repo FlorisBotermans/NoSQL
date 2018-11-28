@@ -6,7 +6,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "SET NODE_ENV='test' & nodemon --exec mocha --recursive -R min"
+    "test": "SET NODE_ENV=test&& nodemon --exec mocha --recursive -R min"
   },
   "repository": {
     "type": "git",
