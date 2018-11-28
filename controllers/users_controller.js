@@ -1,13 +1,28 @@
 const User = require('../models/user');
 const Comment = require('../models/comment');
+const driver = require('../../neo4jdriver')
 
 module.exports = {
+    
+
     // USER CRUD
     // OK
     createUser(req, res, next) {
         User.create(new User(req.body))
             .then(user => res.send(user))
             .catch(next);
+            
+        let session = driver.session();
+        session.run(
+            'CREATE (a: user{userName: $userName}, {password: $password}) RETURN a',
+            {userName: req.body.userName},
+            {password: req.body.password}
+        )
+        .catch((err)=>{
+            session.close();
+        });
+        
+        
     },
 
     // OK
