@@ -3,6 +3,7 @@ const Thread = require('../models/thread');
 
 module.exports = {
     // THREAD CRUD
+    // OK
     createThread(req, res, next) {
         const thread = new Thread(req.body);
 
@@ -16,6 +17,7 @@ module.exports = {
             .catch(next);
     },
 
+    //OK
     getAllThreads(req, res, next) {
         Thread.find()
             .then(threads => res.send(threads))
