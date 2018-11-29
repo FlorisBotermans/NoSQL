@@ -2,6 +2,7 @@ const assert = require('assert');
 const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../../app');
+const driver = require('../../neo4jdriver')
 
 const User = mongoose.model('user');
 
@@ -54,18 +55,4 @@ describe('User controller', () => {
         });
     });
     
-    //FRIENDSHIP TESTS MUST BE CREATED
-    // it('POST to api/user creates a new friendship', done => {
-    //     User.countDocuments().then(count =>{
-    //         request(app)
-    //         .post('/api/users/'+user._id+'/friendships')
-    //         .send({userName : 'testUser', password : 'testPassword'})
-    //         .end(()=> {
-    //             User.countDocuments().then(newCount => {
-    //                 assert(count + 1 === newCount);
-    //                 done();
-    //             });
-    //         });
-    //     });
-    // });
 });
