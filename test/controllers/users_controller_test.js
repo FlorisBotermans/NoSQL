@@ -22,16 +22,16 @@ describe('User controller', () => {
     });
 
     it('PUT to api/users/userid edits a user password', done => {
-        const user =  new User({ userName: 'testUser', password: 'testPassword' })
+        const user =  new User({ userName: 'testUser', password: 'testCurrentPassword' })
 
         user.save().then(() => {
             request(app)
-                .put('/api/users/' + user._id)
-                .send({ password: 'changedPassword' })
+                .put('/api/users')
+                .send({ userName: 'testUser', currentPassword: 'testCurrentPassword', newPassword: 'testChangedPassword' })
                 .end(() => {
                     User.findOne({ userName: 'testUser' })
                         .then(user => {
-                            assert(user.password === 'changedPassword');
+                            assert(user.password === 'testChangedPassword');
                             done();
                         });
                 });

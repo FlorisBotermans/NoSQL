@@ -4,7 +4,6 @@ const Thread = require('../models/thread');
 module.exports = {
     createThread(req, res, next) {
         const thread = new Thread({title: req.body.title, content: req.body.content});
-        console.log(thread);
 
         Thread.create(thread)
             .then(() => User.findOne({ userName: req.body.userName }))

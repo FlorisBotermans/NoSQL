@@ -10,7 +10,6 @@ mongoose.set('useFindAndModify', false);
 
 if (process.env.NODE_ENV !== 'test') {
     mongoose.connect('mongodb://admin:Secret123@ds044979.mlab.com:44979/studdit', { useNewUrlParser: true });
-    console.log('Connected to studdit database')
 }
 
 app.use(bodyParser.json());

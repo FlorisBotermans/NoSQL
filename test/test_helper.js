@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 before(done => {
     mongoose.connect('mongodb://admin:Secret123@ds032887.mlab.com:32887/studdit_test', { useNewUrlParser: true });
-    console.log('Connected to studdit_test database');
     mongoose.connection
         .once('open', () => done())
         .on('error', err => {

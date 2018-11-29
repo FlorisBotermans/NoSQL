@@ -10,8 +10,8 @@ describe('Thread controller', () => {
     it('POST to api/threads creates a new thread', done => {
         Thread.countDocuments().then(count => {
             request(app)
-                .post('/api/users/:userid/threads')
-                .send({ title: 'testTitle', content: 'testContent' })
+                .post('/api/threads')
+                .send({ userName: 'testUserName', title: 'testTitle', content: 'testContent' })
                 .end(() => {
                     Thread.countDocuments().then(newCount => {
                         assert(count + 1 === newCount);
