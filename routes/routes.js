@@ -1,4 +1,5 @@
 const UsersController = require('../controllers/users_controller');
+const FriendshipsController = require('../controllers/friendship_controller');
 const ThreadsController = require('../controllers/threads_controller');
 const CommentsController = require('../controllers/comments_controller');
 
@@ -8,8 +9,8 @@ module.exports = (app) => {
     app.put('/api/users/:userid', UsersController.editUser);
     app.delete('/api/users', UsersController.deleteUser);
     // FRIENDSHIP CRUD
-    app.post('/api/users/:userid/friendships', UsersController.createFriendship);
-    app.delete('/api/users/:userid/friendships/:friendshipid', UsersController.deleteFriendship);
+    app.post('/api/friendships', FriendshipsController.createFriendship);
+    app.delete('/api/friendships/:friendshipid', FriendshipsController.deleteFriendship);
 
     // THREAD CRUD
     app.post('/api/users/:userid/threads', ThreadsController.createThread);

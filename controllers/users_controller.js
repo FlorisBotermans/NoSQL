@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const driver = require('../neo4jdriver')
+const driver = require('../neo4jdriver');
 
 module.exports = {
     createUser(req, res, next) {
@@ -62,12 +62,4 @@ module.exports = {
                 next();
             });
     },
-    
-    createFriendship(req, res, next) {
-        // MUST BE CREATED WITH NEO4J
-    },
-
-    deleteFriendship(req, res, next) {
-        // MUST BE CREATED WITH NEO4J
-    }
 };
