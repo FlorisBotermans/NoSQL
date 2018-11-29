@@ -2,7 +2,6 @@ const assert = require('assert');
 const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../../app');
-const driver = require('../../neo4jdriver')
 
 const User = mongoose.model('user');
 
