@@ -20,6 +20,10 @@ module.exports = {
     },
     
     deleteFriendship(req, res, next) {
-        // MUST BE CREATED WITH NEO4J
+        let session = driver.session();
+
+        session.run(
+            
+        )
     }
 };
