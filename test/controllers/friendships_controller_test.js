@@ -45,13 +45,13 @@ describe('Friendships controller', ()=>{
         let session = driver.session();
     
         session.run(
-            'MATCH (a:User),(b:User) WHERE a.userName = $userName1 AND b.userName = $userName2 CREATE (a)-[r:IS_FRIENDS_WITH]->(b) RETURN type(r)',
+            'MATCH (:User {userName: $userName1})-[r:IS_FRIENDS_WITH]-(:User {userName: $userName2}) DETACH DELETE r',
             {
                 userName1 : name1,
                 userName2: name2
             })
             .then(()=> {
-                return session.run('MATCH (a:User),(b:User) WHERE a.userName = $userName1 AND b.userName = $userName2 CREATE (a)-[r:IS_FRIENDS_WITH]->(b) RETURN type(r)',
+                return session.run('MATCH (:User {userName: $userName1})-[r:IS_FRIENDS_WITH]-(:User {userName: $userName2}) DETACH DELETE r',
                 {
                     userName1 : name1,
                     userName2: name2
