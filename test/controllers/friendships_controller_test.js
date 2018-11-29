@@ -38,4 +38,38 @@ describe('Friendships controller', ()=>{
                 done(err)
             })
     });
+
+    it('DELETE to api/friendship that deletes a friendship', done => {
+        const name1 = 'jan';
+        const name2 = 'piet';
+        let session = driver.session();
+    
+        session.run(
+            'MATCH (:User {userName: $userName1})-[r:IS_FRIENDS_WITH]-(:User {userName: $userName2}) DETACH DELETE r',
+            {
+                userName1 : name1,
+                userName2: name2
+            })
+            .then(()=> {
+                return session.run('MATCH (:User {userName: $userName1})-[r:IS_FRIENDS_WITH]-(:User {userName: $userName2}) DETACH DELETE r',
+                {
+                    userName1 : name1,
+                    userName2: name2
+                })
+            })
+            .then((result) => {
+                const single = result.records[0];
+                const node = single.get(0);
+                assert(
+                    name1 === node.properties.userName1,
+                    name2 === node.properties.userName2
+                    );
+                session.close();
+                done();
+            })
+            .catch((err)=>{
+                session.close();
+                done(err)
+            })
+    });
 });
