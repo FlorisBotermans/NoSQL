@@ -54,5 +54,4 @@ describe('User controller', () => {
                 });
         });
     });
-    
 });
