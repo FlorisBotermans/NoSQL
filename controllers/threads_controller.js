@@ -3,12 +3,13 @@ const Thread = require('../models/thread');
 
 module.exports = {
     createThread(req, res, next) {
-        const thread = new Thread(req.body);
+        const thread = new Thread({title: req.body.title, content: req.body.content});
+        console.log(thread);
 
         Thread.create(thread)
-            .then(() => User.findById({ _id: req.params.userid }))
+            .then(() => User.find({ userName: req.body.userName }))
             .then(user => {
-                user.threads.push(thread)
+                user.threads.push(req.body);
                 return user.save();
             })
             .then(() => res.send(thread))

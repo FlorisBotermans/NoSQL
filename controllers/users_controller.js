@@ -24,17 +24,28 @@ module.exports = {
     },
 
     editUser(req, res, next) {
-        if(req.body.password != null){
-            User.findByIdAndUpdate(
-                { _id: req.params.userid },
-                { $set: { password: req.body.password } }
-            )
-            .then(() => User.findById({ _id: req.params.userid }))
-            .then(user => res.send(user))
-            .catch(next);
-        } else {
-            res.status(422).send({ error: 'Only the password can be modified.' });
-        }
+        let session = driver.session();
+
+        User.findOne({ userName: req.body.userName, password: req.body.currentPassword })
+        .then((user) => {
+            if(user !== null) {
+                user.update({ password: req.body.newPassword })
+                    .then(() => user.save());
+            }
+        })
+        .then(() => User.find({ userName: req.body.userName }))
+        .then(user => res.send(user))
+        .then(() => {
+            session.run(
+                'MATCH (n { userName: $userName, password: $currentPassword }) SET n.password = $newPassword RETURN n.userName, n.password',
+                {
+                    userName: req.body.userName,
+                    currentPassword: req.body.currentPassword,
+                    newPassword: req.body.newPassword
+                }
+            );
+        })
+        .catch(next);
     },
 
     deleteUser(req, res, next) {
