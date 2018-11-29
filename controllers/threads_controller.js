@@ -7,9 +7,9 @@ module.exports = {
         console.log(thread);
 
         Thread.create(thread)
-            .then(() => User.find({ userName: req.body.userName }))
+            .then(() => User.findOne({ userName: req.body.userName }))
             .then(user => {
-                user.threads.push(req.body);
+                user.threads.push(thread._id);
                 return user.save();
             })
             .then(() => res.send(thread))
