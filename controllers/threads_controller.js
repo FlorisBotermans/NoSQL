@@ -49,13 +49,5 @@ module.exports = {
         .then(() => Thread.findByIdAndDelete({ _id: req.params.threadid }))
         .then(thread => res.status(204).send(thread))
         .catch(next);
-    },
-
-    upvoteThread(req, res, next) {
-        // MUST BE CREATED WITH MONGOOSE
-    },
-
-    downvoteThread(req, res, next) {
-        // MUST BE CREATED WITH MONGOOSE
     }
 };

@@ -13,10 +13,6 @@ module.exports = {
             .catch(next);
     },
 
-    createCommentExistingComment(req, res, next) {
-        // MUST BE CREATED WITH NEO4J
-    },
-
     deleteComment(req, res, next) {
         Thread.findByIdAndUpdate(
             { _id: req.params.threadid },
@@ -24,13 +20,5 @@ module.exports = {
         )
         .then(thread => res.status(204).send(thread))
         .catch(next);
-    },
-
-    upvoteComment(req, res, next) {
-        // MUST BE CREATED WITH MONGOOSE
-    },
-
-    downvoteComment(req, res, next) {
-        // MUST BE CREATED WITH MONGOOSE
     }
 };

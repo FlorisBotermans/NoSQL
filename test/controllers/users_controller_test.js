@@ -20,7 +20,7 @@ describe('User controller', () => {
         });
     });
 
-    it('PUT to api/users/userid edits a user password', done => {
+    it('PUT to api/users edits a user password', done => {
         const user =  new User({ userName: 'testUser', password: 'testCurrentPassword' })
 
         user.save().then(() => {
@@ -37,7 +37,7 @@ describe('User controller', () => {
         });
     });
 
-    it('DELETE to api/users/userid deletes a user', done => {
+    it('DELETE to api/users deletes a user', done => {
         const user =  new User({ userName: 'testUser', password: 'testPassword' })
 
         user.save().then(() => {

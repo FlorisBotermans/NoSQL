@@ -31,7 +31,7 @@ module.exports = {
             if(user === null) {
                 res.status(401).send({ error: 'You entered a faulty password.' });
             } else {
-                user.update({ password: req.body.newPassword })
+                user.updateOne({ password: req.body.newPassword })
                     .then(() => user.save());
             }
         })
@@ -74,5 +74,5 @@ module.exports = {
                 session.close();
                 next();
             });
-    },
+    }
 };

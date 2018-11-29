@@ -68,7 +68,7 @@ describe('Thread controller', () => {
         });
     });
 
-    it('DELETE to api/threads/threadid deletes a thread', done => {
+    it('DELETE to api/users/userid/threads/threadid deletes a thread', done => {
         const user = new User({ userName: 'testUserName', password: 'testPassword' });
         const thread = new Thread({ title: 'testTitle', content: 'testContent' });
 
@@ -84,6 +84,4 @@ describe('Thread controller', () => {
                 });
         });
     });
-    //UPVOTE AND DOWNVOTE MUST BE CREATED
-
 });
