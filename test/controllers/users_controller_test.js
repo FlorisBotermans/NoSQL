@@ -36,21 +36,4 @@ describe('User controller', () => {
                 });
         });
     });
-
-    it('DELETE to api/users deletes a user', done => {
-        const user =  new User({ userName: 'testUser', password: 'testPassword' })
-
-        user.save().then(() => {
-            request(app)
-                .delete('/api/users')
-                .send({ userName: 'testUser', password: 'testPassword' })
-                .end(() => {
-                    User.findOne({ userName: 'testUser' })
-                        .then((user) => {
-                            assert(user === null);
-                            done();
-                        });
-                });
-        });
-    });
 });

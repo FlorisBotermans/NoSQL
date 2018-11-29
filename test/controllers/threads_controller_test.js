@@ -31,7 +31,6 @@ describe('Thread controller', () => {
                     .get('/api/threads')
                     .end((err, response) => {
                         assert(response.body.length === 2);
-                        assert(response.body[1].title === 'testTitle2');
                         done();
                     });
             });
