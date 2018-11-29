@@ -4,21 +4,25 @@ const mongoose = require('mongoose');
 const app = require('../../app');
 
 const Thread = mongoose.model('thread');
-const Comment = mongoose.model('comment');
 
 describe('Comments controller', () => {
-    it('POST to api/comments creates a new comment', done => {
-        Comment.countDocuments().then(count => {
-            request(app)
-                .post('/api/users/:userid/threads/:threadid/comments')
-                .send({ content: 'testContent' })
-                .end(() => {
-                    Comment.countDocuments().then(newCount => {
-                        assert(count + 1 === newCount);
+    it.only('POST to api/comments creates a new comment subdocument', done => {
+        const thread = new Thread({
+            title: 'testTitle',
+            content: 'testContent',
+            comments: [{ content: 'testContent2' }]
+        });
+
+        thread.save()
+            .then(() => {
+                request(app)
+                    .post('/api/threads/' + thread._id + '/comments')
+                    .send({ content: 'testContent3' })
+                    .end((err, response) => {
+                        assert(response.body.content === 'testContent3');
                         done();
                     });
-                });
-        });
+            });
     });
 
     // it('POST to api/comments creates a comment on an existing comment', done => {
@@ -37,21 +41,22 @@ describe('Comments controller', () => {
     //     });
     // });
 
-    it('DELETE to api/comments/commentid deletes a comment', done => {
-        const thread = new Thread({ title: 'testTitle', content: 'testContent' })
-        const comment = new Comment({ content: 'testContent' });
-
-        Promise.all([thread.save(), comment.save()]).then(() => {
-            request(app)
-                .delete('/api/threads/' + thread._id + '/comments/' + comment._id)
-                .end(() => {
-                    Comment.findOne({ content: 'testContent' })
-                        .then(comment => {
-                            assert(comment === null);
-                            done();
-                        });
-                });
+    it.only('DELETE to api/comments/commentid deletes a comment subdocument', done => {
+        const thread = new Thread({
+            title: 'testTitle',
+            content: 'testContent',
+            comments: [{ _id: '1234', content: 'testContent2' }]
         });
+
+        thread.save()
+            .then(() => {
+                request(app)
+                    .delete('/api/threads/' + thread._id + '/comments/' + thread.comments[0]._id)
+                    .end(() => {
+                        assert(thread.comments[0] === null);
+                        done();
+                    });
+            });
     });
     //UPVOTE AND DOWNVOTE TEST MUST BE CREATED
     

@@ -40,7 +40,7 @@ module.exports = {
             .then(thread => res.send(thread))
             .catch(next);
         } else {
-            res.status(422).send({ error: 'Cannot modify title' });
+            res.status(422).send({ error: 'Only the content can be modified.' });
         }
     },
 

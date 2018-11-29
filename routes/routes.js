@@ -22,7 +22,7 @@ module.exports = (app) => {
     app.put('/api/users/:userid/threads/:threadid/downvote', ThreadsController.downvoteThread);
 
     // COMMENT CRUD
-    app.post('/api/users/:userid/threads/:threadid/comments', CommentsController.createComment);
+    app.post('/api/threads/:threadid/comments', CommentsController.createComment);
     app.post('/api/users/:userid/threads/:threadid/comments/:commentid', CommentsController.createCommentExistingComment);
     app.delete('/api/threads/:threadid/comments/:commentid', CommentsController.deleteComment);
     // UPVOTE & DOWNVOTE THREAD CRUD

@@ -1,24 +1,16 @@
-const User = require('../models/user');
 const Thread = require('../models/thread');
-const Comment = require('../models/comment');
 
 module.exports = {
     // COMMENT CRUD
     createComment(req, res, next) {
-        const comment = new Comment(req.body);
+        const embeddedComment = req.body;
 
-        Comment.create(comment)
-            .then(() => User.findById({ _id: req.params.userid }))
-            .then(user => {
-                comment.user = user;
-                return comment.save();
-            })
-            .then(() => Thread.findById({ _id: req.params.threadid }))
+        Thread.findById({ _id: req.params.threadid })
             .then(thread => {
-                thread.comments.push(comment)
+                thread.comments.push(embeddedComment);
                 return thread.save();
             })
-            .then(() => res.send(comment))
+            .then(() => res.send(embeddedComment))
             .catch(next);
     },
 
@@ -29,10 +21,9 @@ module.exports = {
     deleteComment(req, res, next) {
         Thread.findByIdAndUpdate(
             { _id: req.params.threadid },
-            { $pull: { comments: req.params.commentid } } 
+            { $pull: { comments: { _id: req.params.commentid } } } 
         )
-        .then(() => Comment.findByIdAndDelete({ _id: req.params.commentid }))
-        .then(comment => res.status(204).send(comment))
+        .then(thread => res.status(204).send(thread))
         .catch(next);
     },
 
