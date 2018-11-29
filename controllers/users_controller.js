@@ -28,7 +28,9 @@ module.exports = {
 
         User.findOne({ userName: req.body.userName, password: req.body.currentPassword })
         .then((user) => {
-            if(user !== null) {
+            if(user === null) {
+                res.status(401).send({ error: 'You entered a faulty password.' });
+            } else {
                 user.update({ password: req.body.newPassword })
                     .then(() => user.save());
             }
