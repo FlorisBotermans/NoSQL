@@ -6,7 +6,7 @@ const app = require('../../app');
 const Thread = mongoose.model('thread');
 
 describe('Comments controller', () => {
-    it.only('POST to api/comments creates a new comment subdocument', done => {
+    it('POST to api/comments creates a new comment subdocument', done => {
         const thread = new Thread({
             title: 'testTitle',
             content: 'testContent',
@@ -41,7 +41,7 @@ describe('Comments controller', () => {
     //     });
     // });
 
-    it.only('DELETE to api/comments/commentid deletes a comment subdocument', done => {
+    it('DELETE to api/comments/commentid deletes a comment subdocument', done => {
         const thread = new Thread({
             title: 'testTitle',
             content: 'testContent',

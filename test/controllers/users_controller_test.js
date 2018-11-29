@@ -42,7 +42,8 @@ describe('User controller', () => {
 
         user.save().then(() => {
             request(app)
-                .delete('/api/users/' + user._id)
+                .delete('/api/users')
+                .send({ userName: 'testUser', password: 'testPassword' })
                 .end(() => {
                     User.findOne({ userName: 'testUser' })
                         .then((user) => {

@@ -2,30 +2,27 @@ const User = require('../models/user');
 const driver = require('../neo4jdriver')
 
 module.exports = {
-    // USER CRUD
     createUser(req, res, next) {
         let session = driver.session();
 
         User.create(new User(req.body))
-            .then((user) => {
-                res.send(user);
-            })
+            .then((user) => res.send(user))
             .then(() => {
                 session.run(
-                    'CREATE (a:User {userName: $userName, password: $password}) RETURN a',
+                    'CREATE (a:User { userName: $userName, password: $password }) RETURN a',
                     {
                         userName: req.body.userName,
                         password: req.body.password
                     }
                 )
-                .then(() => {
-                    session.close()
-                });
+                .then(() => session.close());
             })
-            .catch(next);
+            .catch(() => {
+                session.close();
+                next();
+            });
     },
 
-    // OK
     editUser(req, res, next) {
         if(req.body.password != null){
             User.findByIdAndUpdate(
@@ -41,12 +38,31 @@ module.exports = {
     },
 
     deleteUser(req, res, next) {
-        User.findByIdAndDelete({ _id: req.params.userid })
-            .then(user => res.status(204).send(user))
-            .catch(next);
-    },
+        let session = driver.session();
 
-    // FRIENDSHIP CRUD
+        User.findOne({ userName: req.body.userName, password: req.body.password })
+            .then((user) => {
+                if(user === null) {
+                    res.status(401).send({ error: 'You entered a faulty password.' });
+                } else {
+                    user.remove();
+                    session.run(
+                        'MATCH (a:User { userName: $userName, password: $password }) DELETE a',
+                        {
+                            userName: req.body.userName,
+                            password: req.body.password
+                        }
+                    )
+                    .then(() => session.close())
+                    .then(() => res.status(204).send(user));
+                }
+            })
+            .catch(() => {
+                session.close();
+                next();
+            });
+    },
+    
     createFriendship(req, res, next) {
         // MUST BE CREATED WITH NEO4J
     },

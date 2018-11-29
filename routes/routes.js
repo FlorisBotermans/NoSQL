@@ -6,7 +6,7 @@ module.exports = (app) => {
     // USER CRUD
     app.post('/api/users', UsersController.createUser);
     app.put('/api/users/:userid', UsersController.editUser);
-    app.delete('/api/users/:userid', UsersController.deleteUser);
+    app.delete('/api/users', UsersController.deleteUser);
     // FRIENDSHIP CRUD
     app.post('/api/users/:userid/friendships', UsersController.createFriendship);
     app.delete('/api/users/:userid/friendships/:friendshipid', UsersController.deleteFriendship);

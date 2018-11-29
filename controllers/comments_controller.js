@@ -1,7 +1,6 @@
 const Thread = require('../models/thread');
 
 module.exports = {
-    // COMMENT CRUD
     createComment(req, res, next) {
         const embeddedComment = req.body;
 
@@ -27,7 +26,6 @@ module.exports = {
         .catch(next);
     },
 
-    // UPVOTE & DOWNVOTE COMMENT CRUD
     upvoteComment(req, res, next) {
         // MUST BE CREATED WITH MONGOOSE
     },

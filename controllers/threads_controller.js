@@ -2,8 +2,6 @@ const User = require('../models/user');
 const Thread = require('../models/thread');
 
 module.exports = {
-    // THREAD CRUD
-    // OK
     createThread(req, res, next) {
         const thread = new Thread(req.body);
 
@@ -17,7 +15,6 @@ module.exports = {
             .catch(next);
     },
 
-    //OK
     getAllThreads(req, res, next) {
         Thread.find()
             .then(threads => res.send(threads))
@@ -31,7 +28,7 @@ module.exports = {
     },
 
     editThread(req, res, next) {
-        if(req.body.content != null){
+        if(req.body.content != null) {
             Thread.findByIdAndUpdate(
                 { _id: req.params.threadid },
                 { $set: { content: req.body.content } }
@@ -54,7 +51,6 @@ module.exports = {
         .catch(next);
     },
 
-    // UPVOTE & DOWNVOTE THREAD CRUD
     upvoteThread(req, res, next) {
         // MUST BE CREATED WITH MONGOOSE
     },
