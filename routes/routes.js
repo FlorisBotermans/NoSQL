@@ -18,15 +18,8 @@ module.exports = (app) => {
     app.get('/api/threads/:threadid', ThreadsController.getThreadById);
     app.put('/api/threads/:threadid', ThreadsController.editThread);
     app.delete('/api/users/:userid/threads/:threadid', ThreadsController.deleteThread);
-    // UPVOTE & DOWNVOTE THREAD CRUD
-    app.put('/api/users/:userid/threads/:threadid/upvote', ThreadsController.upvoteThread);
-    app.put('/api/users/:userid/threads/:threadid/downvote', ThreadsController.downvoteThread);
 
     // COMMENT CRUD
     app.post('/api/threads/:threadid/comments', CommentsController.createComment);
-    app.post('/api/users/:userid/threads/:threadid/comments/:commentid', CommentsController.createCommentExistingComment);
     app.delete('/api/threads/:threadid/comments/:commentid', CommentsController.deleteComment);
-    // UPVOTE & DOWNVOTE THREAD CRUD
-    app.put('/api/users/:userid/threads/:threadid/comments/:commentid/upvote', CommentsController.upvoteComment);
-    app.put('/api/users/:userid/threads/:threadid/comments/:commentid/downvote', CommentsController.downvoteComment);
 };
