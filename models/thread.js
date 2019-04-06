@@ -3,6 +3,7 @@ const CommentSchema = require('./comment')
 const Schema = mongoose.Schema;
 
 const ThreadSchema = new Schema({
+    userName:{ type: String, required: true}, 
     title: { type: String, required: true },
     content: { type: String, required: true },
     comments: [CommentSchema]

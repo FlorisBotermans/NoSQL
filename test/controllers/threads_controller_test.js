@@ -22,8 +22,8 @@ describe('Thread controller', () => {
     });
 
     it('GET to api/threads retrieves all threads', done => {
-        const thread = new Thread({ title: 'testTitle', content: 'testContent' });
-        const thread2 = new Thread({ title: 'testTitle2', content: 'testContent2' });
+        const thread = new Thread({ userName: 'testUserName',title: 'testTitle', content: 'testContent' });
+        const thread2 = new Thread({ userName: 'testUserName2',title: 'testTitle2', content: 'testContent2' });
 
         Promise.all([thread.save(), thread2.save()])
             .then(() => {
@@ -37,7 +37,7 @@ describe('Thread controller', () => {
     });
 
     it('GET to api/threads/threadid retrieves a specific thread', done => {
-        const thread = new Thread({ title: 'testTitle', content: 'testContent' });
+        const thread = new Thread({userName: 'testUserName', title: 'testTitle', content: 'testContent' });
 
         thread.save()
             .then(() => {
@@ -51,7 +51,7 @@ describe('Thread controller', () => {
     });
 
     it('PUT to api/threads/threadid edits the content of a thread', done => {
-        const thread = new Thread({ title: 'testTitle', content: 'testContent' });
+        const thread = new Thread({userName: 'testUserName', title: 'testTitle', content: 'testContent' });
 
         thread.save().then(() => {
             request(app)
@@ -69,7 +69,7 @@ describe('Thread controller', () => {
 
     it('DELETE to api/users/userid/threads/threadid deletes a thread', done => {
         const user = new User({ userName: 'testUserName', password: 'testPassword' });
-        const thread = new Thread({ title: 'testTitle', content: 'testContent' });
+        const thread = new Thread({ userName: 'testUserName', title: 'testTitle', content: 'testContent' });
 
         Promise.all([user.save(), thread.save()]).then(() => {
             request(app)

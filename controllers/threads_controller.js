@@ -3,7 +3,7 @@ const Thread = require('../models/thread');
 
 module.exports = {
     createThread(req, res, next) {
-        const thread = new Thread({title: req.body.title, content: req.body.content});
+        const thread = new Thread({userName: req.body.userName,title: req.body.title, content: req.body.content});
 
         Thread.create(thread)
             .then(() => User.findOne({ userName: req.body.userName }))
@@ -16,7 +16,7 @@ module.exports = {
     },
 
     getAllThreads(req, res, next) {
-        Thread.find()
+        Thread.find().select('-comments')
             .then(threads => res.send(threads))
             .catch(next);
     },

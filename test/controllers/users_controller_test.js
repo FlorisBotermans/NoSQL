@@ -36,4 +36,18 @@ describe('User controller', () => {
                 });
         });
     });
+
+    it('DELETE to api/users deletes a user ', done => {
+        const user =  new User({ userName: 'testUser', password: 'testCurrentPassword' })
+
+        user.save().then(() => {
+            request(app)
+                .delete('/api/users')
+                .send({ userName: 'testUser', password:'testCurrentPassword' })
+                .end((err,response) => {
+                   assert(response.status === 204)
+                   done();
+                });
+        });
+    });
 });

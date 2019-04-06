@@ -5,6 +5,12 @@ module.exports = {
     createUser(req, res, next) {
         let session = driver.session();
 
+        User.findOne({userName : req.body.userName})
+        .then((user)=>{
+            if(user !== null){
+                res.send({Message: "Username is already taken"})
+            }
+        else{
         User.create(new User(req.body))
             .then((user) => res.send(user))
             .then(() => {
@@ -17,6 +23,8 @@ module.exports = {
                 )
                 .then(() => session.close());
             })
+        }
+        })
             .catch(() => {
                 session.close();
                 next();
