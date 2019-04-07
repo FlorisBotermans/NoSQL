@@ -67,21 +67,23 @@ module.exports = {
                 if(user === null) {
                     res.status(401).send({ error: 'You entered a faulty password.' });
                 } else {
-                    user.remove();
+                    
                     session.run(
-                        'MATCH (u:User { userName: $userName })-[r:FRIENDSHIP]-() DELETE r, u',
+                        'MATCH (a:User { userName: $userName })-[f:FRIENDSHIP]-() DELETE a, f',
                         { userName: req.body.userName }
                     );
                     session.close();
+                    
                     session.run(
-                        'MATCH (a:User { userName: $userName, password: $password })DELETE a',
+                        'MATCH (a:User { userName: $userName, password: $password }) a',
                         {
                             userName: req.body.userName,
                             password: req.body.password
                         }
                     )
-                    .then(() => session.close())
-                    .then(() => res.status(200).send({Message: "User is deleted"}));
+                    
+                    session.close();
+                    res.status(200).send({Message: "User is deleted"});
                 }
             })
             .catch(() => {
