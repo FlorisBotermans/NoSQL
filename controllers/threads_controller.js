@@ -79,24 +79,31 @@ module.exports = {
             { $pull: { threads: req.params.threadid } } 
         )
         .then(() => Thread.findByIdAndDelete({ _id: req.params.threadid }))
-        .then(thread => res.status(204).send(thread))
+        .then(thread => res.status(200))
         .catch(next);
     },
 
     upvoteThread(req, res, next){
-        User.findOne({ userName: req.body.userName })
-            .then((user) => {
-                if(user !== null) {
-                        Thread.findById({ _id: req.params.threadid } )
-                            .then((thread) => {
-                                if(thread !== null) {
-                                    thread.upVote.push(req.body.userName);
+        Thread.findById({ _id: req.params.threadid } )
+            .then((thread) => {
+                if(thread !== null) {
+                    User.findOne({ userName: req.body.userName })
+                            .then((user) => {
+                                if(user !== null ) {
+                                    Thread.find({upVote: req.body.userName})
+                                    .then((threadss)=> {
+                                        if(threadss !== null){
+                                            thread.upVote.push(req.body.userName);
                                     return thread.save()
                                     .then((thread) => {
                                         res.status(200).send(thread);
                                     })
+                                        }
+                                    })
+                                    
                                     .catch(next);
                                 }
+                            
                                 else{
                                     res.send({error: 'User does not exist'})
                                 }
