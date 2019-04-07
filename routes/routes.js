@@ -14,6 +14,8 @@ module.exports = (app) => {
 
     // THREAD CRUD
     app.post('/api/threads', ThreadsController.createThread);
+    app.post('/api/threads/:threadid/upvote', ThreadsController.upvoteThread);
+    app.post('/api/threads/:threadid/downvote', ThreadsController.downvoteThread);
     app.get('/api/threads', ThreadsController.getAllThreads);
     app.get('/api/threads/:threadid', ThreadsController.getThreadById);
     app.put('/api/threads/:threadid', ThreadsController.editThread);

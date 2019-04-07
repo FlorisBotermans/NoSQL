@@ -7,17 +7,13 @@ const User = mongoose.model('user');
 
 describe('User controller', () => {
     it('POST to api/users creates a new user', done => {
-        User.countDocuments().then(count => {
             request(app)
                 .post('/api/users')
                 .send({ userName: 'testUser', password: 'testPassword' })
-                .end(() => {
-                    User.countDocuments().then(newCount => {
-                        assert(count + 1 === newCount);
-                        done();
-                    });
-                });
-        });
+                .end((err, response) => {
+                    assert(response.status === 200);
+                    done();
+                });    
     });
 
     it('PUT to api/users edits a user password', done => {
@@ -38,12 +34,12 @@ describe('User controller', () => {
     });
 
     it('DELETE to api/users deletes a user ', done => {
-        const user =  new User({ userName: 'testUser', password: 'testCurrentPassword' })
+        const user =  new User({ userName: 'testUser', password: 'testPassword' })
 
         user.save().then(() => {
             request(app)
                 .delete('/api/users')
-                .send({ userName: 'testUser', password:'testCurrentPassword' })
+                .send({ userName: 'testUser', password:'testPassword' })
                 .end((err,response) => {
                    assert(response.status === 204)
                    done();

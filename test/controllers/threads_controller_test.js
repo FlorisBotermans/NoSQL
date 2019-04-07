@@ -83,4 +83,35 @@ describe('Thread controller', () => {
                 });
         });
     });
+
+    it('POST to api/threads/threadid will upvote the thread', done =>{
+        const user = new User({ userName: 'testUserName', password: 'testPassword' });
+        const thread = new Thread({ userName: 'testUserName', title: 'testTitle', content: 'testContent' });
+
+        Promise.all([thread.save(), user.save()]).then(()=>{
+            request(app)
+            .post('/api/threads/'+ thread._id + "/upvote")
+            .send({ userName: 'testUserName', password: 'testPassword'})
+            .end((err, response)=>{
+                assert(response.status === 200)
+                done();
+            })
+        })
+    });
+
+    it('POST to api/threads/threadid will downvote the thread', done =>{
+        const user = new User({ userName: 'testUserName', password: 'testPassword' });
+        const thread = new Thread({ userName: 'testUserName', title: 'testTitle', content: 'testContent' });
+
+        Promise.all([thread.save(), user.save()]).then(()=>{
+            request(app)
+            .post('/api/threads/'+ thread._id + "/downvote")
+            .send({ userName: 'testUserName', password: 'testPassword'})
+            .end((err, response)=>{
+                assert(response.status === 200)
+                done();
+            })
+        })
+    });
+
 });

@@ -46,7 +46,7 @@ describe('Comments controller', () => {
                         request(app)
                         .delete('/api/threads/' + thread._id + '/comments/' + comment._id)
                         .end((err, response)=>{
-                            assert(response.status === 204)
+                            assert(response.status === 200)
                             done();
                         })                   
                     });

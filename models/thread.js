@@ -6,7 +6,10 @@ const ThreadSchema = new Schema({
     userName:{ type: String, required: true}, 
     title: { type: String, required: true },
     content: { type: String, required: true },
+    upVote: [{type: String}],
+    downVote: [{type: String}],
     comments: [CommentSchema]
+    
 });
 
 const Thread = mongoose.model('thread', ThreadSchema)

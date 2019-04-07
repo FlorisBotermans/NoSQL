@@ -21,7 +21,8 @@ module.exports = {
                         password: req.body.password
                     }
                 )
-                .then(() => session.close());
+                session.close()
+                res.status(200);
             })
         }
         })
