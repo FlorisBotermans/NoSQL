@@ -94,17 +94,14 @@ module.exports = {
                                     .then((threadss)=> {
                                         if(threadss !== null){
                                             thread.upVote.push(req.body.userName);
-                                    return thread.save()
-                                    .then((thread) => {
-                                        res.status(200).send(thread);
-                                    })
+                                            return thread.save()
+                                            .then((thread) => {
+                                                res.status(200).send(thread);
+                                            })
                                         }
-                                    })
-                                    
-                                    .catch(next);
+                                    }).catch(next);
                                 }
-                            
-                                else{
+                                 else{
                                     res.send({error: 'User does not exist'})
                                 }
                             }).catch(next);  
