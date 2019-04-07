@@ -41,7 +41,7 @@ describe('User controller', () => {
                 .delete('/api/users')
                 .send({ userName: 'testUser', password:'testPassword' })
                 .end((err,response) => {
-                   assert(response.status === 204)
+                   assert(response.status === 200)
                    done();
                 });
         });

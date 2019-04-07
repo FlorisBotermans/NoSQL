@@ -69,7 +69,7 @@ describe('Thread controller', () => {
 
     it('DELETE to api/users/userid/threads/threadid deletes a thread', done => {
         const user = new User({ userName: 'testUserName', password: 'testPassword' });
-        const thread = new Thread({ userName: 'testUserName', title: 'testTitle', content: 'testContent' });
+        const thread = new Thread({userName: 'testUserName', title: 'testTitle', content: 'testContent' });
 
         Promise.all([user.save(), thread.save()]).then(() => {
             request(app)

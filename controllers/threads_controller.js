@@ -79,7 +79,7 @@ module.exports = {
             { $pull: { threads: req.params.threadid } } 
         )
         .then(() => Thread.findByIdAndDelete({ _id: req.params.threadid }))
-        .then(thread => res.status(200))
+        .then(thread => res.status(200).send(thread))
         .catch(next);
     },
 

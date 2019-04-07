@@ -8,7 +8,7 @@ module.exports = {
         let session = driver.session();
 
         session.run(
-            'MATCH (a:User),(b:User) WHERE a.userName = $userName1 AND b.userName = $userName2 CREATE UNIQUE (a)<-[r:IS_FRIENDS_WITH]->(b) RETURN type(r)',
+            'MATCH (a:User),(b:User) WHERE a.userName = $userName1 AND b.userName = $userName2 CREATE UNIQUE (a)<-[r:IS_FRIENDS_WITH]- (b) CREATE UNIQUE (a)- [s:IS_FRIENDS_WITH]->(b)',
             {
                 userName1: req.body.userName1,
                 userName2: req.body.userName2
