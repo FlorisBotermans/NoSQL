@@ -67,7 +67,7 @@ module.exports = {
                 if(user === null) {
                     res.status(401).send({ error: 'You entered a faulty password.' });
                 } else {
-                    
+                    user.remove();
                     session.run(
                         'MATCH (a:User { userName: $userName, password: $password })-[f:FRIENDSHIP]-() DELETE a, f',
                         { 
@@ -77,7 +77,7 @@ module.exports = {
                         }
                     );
                     session.close();
-                    
+                    user.remove();
                     session.run(
                         'MATCH (a:User { userName: $userName, password: $password }) a',
                         {
