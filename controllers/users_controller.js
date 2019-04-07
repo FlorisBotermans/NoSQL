@@ -69,26 +69,14 @@ module.exports = {
                 } else {
                     user.remove();
                     session.run(
-                        'MATCH (a:User { userName: $userName, password: $password })-[f:FRIENDSHIP]-() DELETE a, f',
-                        { 
-                            userName: req.body.userName,
-                            password: req.body.password
-                            
-                        
-                        }
-                    );
-                    session.close();
-                    
-                    session.run(
-                        'MATCH (a:User { userName: $userName, password: $password }) a',
+                        'MATCH (a:User { userName: $userName, password: $password }) -[f:IS_FRIENDS_WITH]-() DELETE a, f',
                         {
                             userName: req.body.userName,
                             password: req.body.password
                         }
                     )
-                    
-                    session.close();
-                    res.status(200).send({Message: "User is deleted"});
+                    .then(() => session.close())
+                    .then(() => res.status(200).send({Message: "User is deleted"}));
                 }
             })
             .catch(() => {
