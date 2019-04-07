@@ -69,9 +69,10 @@ module.exports = {
                 } else {
                     user.remove();
                     session.run(
-                        'MATCH (a:User { userName: $userName})-[f:FRIENDSHIP]-() DELETE a, f',
+                        'MATCH (a:User { userName: $userName, password: $password })-[f:FRIENDSHIP]-() DELETE a, f',
                         { 
-                            userName: req.body.userName, 
+                            userName: req.body.userName,
+                            password: req.body.password
                             
                         
                         }
